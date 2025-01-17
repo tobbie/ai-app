@@ -49,12 +49,18 @@
       "plugin": "@nx/jest/plugin",
       "options": {
         "targetName": "test"
-      }
+      },
+      "exclude": ["apps/node-api-e2e/**/*"]
     }
   ],
   "targetDefaults": {
     "e2e-ci--**/*": {
       "dependsOn": ["^build"]
+    },
+    "@nx/esbuild:esbuild": {
+      "cache": true,
+      "dependsOn": ["^build"],
+      "inputs": ["production", "^production"]
     }
   },
   "generators": {
@@ -73,5 +79,11 @@
         "linter": "eslint"
       }
     }
+  },
+
+  "projects": {
+    "react-app":  "apps/react-store",
+    "node-app":   "apps/node-api",
+    "python-app": "apps/python-api"
   }
 }
