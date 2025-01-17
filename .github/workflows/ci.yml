@@ -17,6 +17,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Print Message
-        run:  develop branch is up
+        run:  echo "develop branch is up"
 
       
