@@ -32,14 +32,17 @@ jobs:
 
             - name: Set TAG Based on Branch
               run: |
-                  if [[ "$BRANCH_NAME" == "develop" ]]; then
-                    echo "TAG=develop-$GITHUB_SHA" >> $GITHUB_ENV
+                SHORT_SHA=${GITHUB_SHA::7}
+                echo "SHORT_SHA=$SHORT_SHA" >> $GITHUB_ENV
+
+                if [[ "$BRANCH_NAME" == "develop" ]]; then
+                  echo "TAG=develop-$SHORT_SHA" >> $GITHUB_ENV
                   elif [[ "$BRANCH_NAME" == "main" ]]; then
-                    echo "TAG=staging-$GITHUB_SHA" >> $GITHUB_ENV
-                  else
-                    echo "Branch $BRANCH_NAME not handled!"
-                    exit 1
-                  fi
+                    echo "TAG=staging-$SHORT_SHA" >> $GITHUB_ENV
+                else
+                  echo "Branch $BRANCH_NAME not handled!"
+                  exit 1
+                fi
             
             - name: Build Docker Image
               run: docker build -t "${{ vars.DOCKERHUB_USER }}/${{ env.IMAGE_NAME }}:${{ env.TAG }}" apps/python-api
