@@ -1,0 +1,12 @@
+services:
+  python-api:
+    build:
+      context: apps/python-api
+      dockerfile: Dockerfile
+    image: python-api
+    container_name: python-api
+    ports:
+      - 8001:8001
+    restart: always
+  
+ 
